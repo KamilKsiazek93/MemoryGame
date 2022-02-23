@@ -13,12 +13,12 @@ namespace MemoryGame
             char userDifficulty = 'a';
             while (userDifficulty != 'e' && userDifficulty != 'h')
             {
-                userDifficulty = Console.ReadKey().KeyChar;
-                if (Char.ToLower(userDifficulty) == 'e')
+                userDifficulty = Char.ToLower(Console.ReadKey().KeyChar);
+                if (userDifficulty == 'e')
                 {
                     Information.DisplayMessagesForEasyMode();
                 }
-                else if (Char.ToLower(userDifficulty) == 'h')
+                else if (userDifficulty == 'h')
                 {
                     Information.DisplayMessagesForHardMode();
                 }
@@ -28,6 +28,20 @@ namespace MemoryGame
                 }
             }
             return userDifficulty;
+        }
+
+        public int GetNumberOfWordsForUserDifficulty(char userDifficulty)
+        {
+            return userDifficulty == 'e' ? 4 : 8;
+        }
+
+        public void TakeRandomWordsForGame(List<string> words, int difficulty)
+        {
+            var challange = words.OrderBy(item => Guid.NewGuid()).Take(difficulty);
+            foreach(var item in challange)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
