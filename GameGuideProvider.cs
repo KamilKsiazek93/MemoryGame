@@ -13,12 +13,12 @@ namespace MemoryGame
             char userDifficulty = 'a';
             while (userDifficulty != 'e' && userDifficulty != 'h')
             {
-                userDifficulty = Console.ReadKey().KeyChar;
-                if (Char.ToLower(userDifficulty) == 'e')
+                userDifficulty = Char.ToLower(Console.ReadKey().KeyChar);
+                if (userDifficulty == 'e')
                 {
                     Information.DisplayMessagesForEasyMode();
                 }
-                else if (Char.ToLower(userDifficulty) == 'h')
+                else if (userDifficulty == 'h')
                 {
                     Information.DisplayMessagesForHardMode();
                 }
