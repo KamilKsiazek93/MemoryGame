@@ -29,5 +29,19 @@ namespace MemoryGame
             }
             return userDifficulty;
         }
+
+        public int GetNumberOfWordsForUserDifficulty(char userDifficulty)
+        {
+            return userDifficulty == 'e' ? 4 : 8;
+        }
+
+        public void TakeRandomWordsForGame(List<string> words, int difficulty)
+        {
+            var challange = words.OrderBy(item => Guid.NewGuid()).Take(difficulty);
+            foreach(var item in challange)
+            {
+                Console.WriteLine(item);
+            }
+        }
     }
 }

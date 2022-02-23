@@ -13,7 +13,8 @@ namespace MemoryGame
             var words = fileOperations.GetWordsFromFile();
             Information.DisplayInformationBeforeStartGame();
             char userDifficulty = gameProvider.GetUserDifficulty();
-            Console.WriteLine(userDifficulty);
+            var numberOfRandomWords = gameProvider.GetNumberOfWordsForUserDifficulty(userDifficulty);
+            gameProvider.TakeRandomWordsForGame(words, numberOfRandomWords);
         }
     }
 }
