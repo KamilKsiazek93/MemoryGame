@@ -7,9 +7,9 @@ using System.IO;
 
 namespace MemoryGame
 {
-    public class FilesOperations
+    public static class FilesOperations
     {
-        public List<string> GetWordsFromFile()
+        public static List<string> GetWordsFromFile()
         {
             var words = new List<string>();
             foreach (string line in File.ReadLines("../../../Words.txt"))

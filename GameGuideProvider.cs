@@ -8,9 +8,9 @@ using MemoryGame.Models;
 
 namespace MemoryGame
 {
-    public class GameGuideProvider
+    public static class GameGuideProvider
     {
-        public char GetUserDifficulty()
+        public static char GetUserDifficulty()
         {
             char userDifficulty = 'a';
             while (userDifficulty != 'e' && userDifficulty != 'h')
@@ -32,34 +32,38 @@ namespace MemoryGame
             return userDifficulty;
         }
 
-        public int GetNumberOfWordsForUserDifficulty(char userDifficulty)
+        public static int GetNumberOfWordsForUserDifficulty(char userDifficulty)
         {
             return userDifficulty == 'e' ? 4 : 8;
         }
 
-        public int GetMaxOfChances(char userDifficulty)
+        public static int GetMaxOfChances(char userDifficulty)
         {
             return userDifficulty == 'e' ? 10 : 15;
         }
 
-        public List<string> TakeRandomWordsForGame(List<string> words, int difficulty)
+        public static List<string> GetRandomWordsForGame(List<string> words, int difficulty)
         {
             Random random = new Random();
             var selectedWords = new List<string>();
-            for(int i = 0; i < difficulty; i++)
+            for(int i = 0; i < difficulty;)
             {
                 int index = random.Next(words.Count);
-                selectedWords.Add(words[index]);
+                if (!selectedWords.Contains(words[index]))
+                {
+                    selectedWords.Add(words[index]);
+                    i++;
+                }
             }
             return selectedWords;
         }
 
-        public IEnumerable<string> GetCopyOfList(List<string> words)
+        public static IEnumerable<string> GetCopyOfList(List<string> words)
         {
             return words.OrderBy(item => Guid.NewGuid());
         }
 
-        public IEnumerable<GameTemplate> GetTemplateOfWordsForGame(IEnumerable<string> words, char key)
+        public static IEnumerable<GameTemplate> GetTemplateOfWordsForGame(IEnumerable<string> words, char key)
         {
             var template = new List<GameTemplate>();
             int index = 1;
@@ -71,7 +75,7 @@ namespace MemoryGame
             return template;
         }
 
-        public void PlayGame(IEnumerable<GameTemplate> firstTemplate, IEnumerable<GameTemplate> secondTemplate, int maxOfChances)
+        public static void PlayGame(IEnumerable<GameTemplate> firstTemplate, IEnumerable<GameTemplate> secondTemplate, int maxOfChances)
         {
             int toWin = firstTemplate.ToList().Count;
             while (maxOfChances > 0 && toWin > 0)
@@ -108,12 +112,12 @@ namespace MemoryGame
             Information.DisplayMessageAboutResultGame(toWin);
         }
 
-        private string GetWordByPickedKey(IEnumerable<GameTemplate> template, string pickedKey)
+        private static string GetWordByPickedKey(IEnumerable<GameTemplate> template, string pickedKey)
         {
             return template.Where(item => item.Key == pickedKey).Select(item => item.Word).First();
         }
 
-        private IEnumerable<GameTemplate> ChangeDiscoverWord(IEnumerable<GameTemplate> template, string pickedKey)
+        private static IEnumerable<GameTemplate> ChangeDiscoverWord(IEnumerable<GameTemplate> template, string pickedKey)
         {
             foreach (var item in template)
             {
@@ -125,7 +129,7 @@ namespace MemoryGame
             return template;
         }
 
-        private string GetPickedKey(IEnumerable<GameTemplate> firstTemplate)
+        private static string GetPickedKey(IEnumerable<GameTemplate> firstTemplate)
         {
             var isWordCorrectPick = false;
             string pickedKey = "";
@@ -145,7 +149,7 @@ namespace MemoryGame
             return pickedKey;
         }
 
-        private bool IsWordAvailableToPick(string pickedKey, IEnumerable<GameTemplate> firstTemplate)
+        private static bool IsWordAvailableToPick(string pickedKey, IEnumerable<GameTemplate> firstTemplate)
         {
             var pickedWord = firstTemplate.Where(item => item.Key == pickedKey).FirstOrDefault();
 
@@ -160,7 +164,7 @@ namespace MemoryGame
             return true;
         }
 
-        public void DisplayRow(IEnumerable<GameTemplate> template, char rowName)
+        public static void DisplayRow(IEnumerable<GameTemplate> template, char rowName)
         {
             Console.Write(rowName + " ");
             foreach(var row in template)
@@ -176,7 +180,7 @@ namespace MemoryGame
             }
         }
 
-        public string PickWordsByUser()
+        public static string PickWordsByUser()
         {
             return Console.ReadLine();
         }
@@ -209,7 +213,7 @@ namespace MemoryGame
             return emptyString;
         }
 
-        public void DisplayMatrix(IEnumerable<GameTemplate> firstTemplate, IEnumerable<GameTemplate> secondTemplate, int maxOfChances)
+        public static void DisplayMatrix(IEnumerable<GameTemplate> firstTemplate, IEnumerable<GameTemplate> secondTemplate, int maxOfChances)
         {
             Console.Clear();
             Information.DisplayInfoAboutLevel(maxOfChances);
@@ -223,7 +227,7 @@ namespace MemoryGame
             Console.WriteLine();
         }
 
-        public char AskUserToPlayAgain()
+        public static char AskUserToPlayAgain()
         {
             Information.DisplayInformationAboutAgainGame();
             char playAgain = ' ';
