@@ -180,16 +180,47 @@ namespace MemoryGame
         {
             return Console.ReadLine();
         }
+        public static void DisplayNumberOfRows(IEnumerable<GameTemplate> template)
+        {
+            Console.Write("  ");
+            var counter = 1;
+            foreach(var item in template)
+            {
+                if(item.IsDiscover)
+                {
+                    Console.Write(counter + GetEmptySpaces(item.Word));
+                }
+                else
+                {
+                    Console.Write(counter + " ");
+                }
+                counter++;
+            }
+            Console.WriteLine();
+        }
+
+        public static string GetEmptySpaces(string word)
+        {
+            string emptyString = "";
+            for(int i = 0; i< word.Length; i++)
+            {
+                emptyString += " ";
+            }
+            return emptyString;
+        }
 
         public void DisplayMatrix(IEnumerable<GameTemplate> firstTemplate, IEnumerable<GameTemplate> secondTemplate, int maxOfChances)
         {
             Console.Clear();
             Information.DisplayInfoAboutLevel(maxOfChances);
             Information.DisplayInfoAboutChancesLeft(maxOfChances);
-            Information.DisplayNumberOfRows(firstTemplate.ToList().Count);
+            DisplayNumberOfRows(firstTemplate);
             DisplayRow(firstTemplate, 'A');
             Console.WriteLine();
             DisplayRow(secondTemplate, 'B');
+            Console.WriteLine();
+            DisplayNumberOfRows(secondTemplate);
+            Console.WriteLine();
         }
 
         public char AskUserToPlayAgain()
