@@ -34,5 +34,45 @@ namespace MemoryGame
             Console.WriteLine();
             Console.WriteLine("Welcome in hard mode");
         }
+
+        public static void DisplayInfoAboutChancesLeft(int maxOfChances)
+        {
+            Console.WriteLine("Guess chances: {0}", maxOfChances);
+            Console.WriteLine();
+        }
+
+        public static void DisplayInfoAboutLevel(int maxOfChances)
+        {
+            if (maxOfChances == 10)
+            {
+                Console.WriteLine("Level: easy");
+            }
+            else
+            {
+                Console.WriteLine("Level: hard");
+            }
+        }
+        public static void DisplayNumberOfRows(int count)
+        {
+            Console.Write("  ");
+            for (int i = 1; i <= count; i++)
+            {
+                Console.Write(i + " ");
+            }
+            Console.WriteLine();
+        }
+
+        public static void AskUserForWordInFistRow()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Pick word that you want to discover, for example: A1");
+            Console.WriteLine();
+        }
+
+        public static void AskUserForWordInSecondRow()
+        {
+            Console.WriteLine("Pick word that you want to discover, for example: B1");
+            Console.WriteLine();
+        }
     }
 }

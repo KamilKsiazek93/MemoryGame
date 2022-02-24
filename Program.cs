@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using MemoryGame.Models;
 
@@ -17,7 +18,7 @@ namespace MemoryGame
             var numberOfRandomWords = gameProvider.GetNumberOfWordsForUserDifficulty(userDifficulty);
             var maxOfChances = gameProvider.GetMaxOfChances(userDifficulty);
             var firstWordsList = gameProvider.TakeRandomWordsForGame(words, numberOfRandomWords);
-            var secondWordsList = gameProvider.TakeRandomWordsForGame(words, numberOfRandomWords);
+            var secondWordsList = gameProvider.GetCopyOfList(firstWordsList);
             var firstRowGame = gameProvider.GetTemplateOfWordsForGame(firstWordsList, 'A');
             var secondRowGame = gameProvider.GetTemplateOfWordsForGame(secondWordsList, 'B');
             gameProvider.PlayGame(firstRowGame, secondRowGame, maxOfChances);
