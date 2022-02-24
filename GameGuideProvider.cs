@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MemoryGame.Models;
 
 namespace MemoryGame
 {
@@ -35,13 +36,31 @@ namespace MemoryGame
             return userDifficulty == 'e' ? 4 : 8;
         }
 
-        public void TakeRandomWordsForGame(List<string> words, int difficulty)
+        public int GetMaxOfChances(char userDifficulty)
         {
-            var challange = words.OrderBy(item => Guid.NewGuid()).Take(difficulty);
-            foreach(var item in challange)
+            return userDifficulty == 'e' ? 10 : 15;
+        }
+
+        public IEnumerable<string> TakeRandomWordsForGame(List<string> words, int difficulty)
+        {
+            return words.OrderBy(item => Guid.NewGuid()).Take(difficulty);
+        }
+
+        public IEnumerable<GameTemplate> GetTemplateOfWordsForGame(IEnumerable<string> words, char key)
+        {
+            var template = new List<GameTemplate>();
+            int index = 1;
+            foreach(var word in words)
             {
-                Console.WriteLine(item);
+                template.Add(new GameTemplate { Key = String.Concat(key, index.ToString()), Word = word, IsDiscover = false});
+                index++;
             }
+            return template;
+        }
+
+        public void PlayGame(IEnumerable<GameTemplate> firstTemplate, IEnumerable<GameTemplate> secondTemplate, int maxOfChances)
+        {
+            
         }
     }
 }

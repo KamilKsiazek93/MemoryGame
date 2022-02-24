@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using MemoryGame.Models;
 
 namespace MemoryGame
 {
@@ -14,7 +15,12 @@ namespace MemoryGame
             Information.DisplayInformationBeforeStartGame();
             char userDifficulty = gameProvider.GetUserDifficulty();
             var numberOfRandomWords = gameProvider.GetNumberOfWordsForUserDifficulty(userDifficulty);
-            gameProvider.TakeRandomWordsForGame(words, numberOfRandomWords);
+            var maxOfChances = gameProvider.GetMaxOfChances(userDifficulty);
+            var firstWordsList = gameProvider.TakeRandomWordsForGame(words, numberOfRandomWords);
+            var secondWordsList = gameProvider.TakeRandomWordsForGame(words, numberOfRandomWords);
+            var firstRowGame = gameProvider.GetTemplateOfWordsForGame(firstWordsList, 'A');
+            var secondRowGame = gameProvider.GetTemplateOfWordsForGame(secondWordsList, 'B');
+            gameProvider.PlayGame(firstRowGame, secondRowGame, maxOfChances);
         }
     }
 }
