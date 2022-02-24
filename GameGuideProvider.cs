@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -78,6 +79,7 @@ namespace MemoryGame
         public static void PlayGame(IEnumerable<GameTemplate> firstTemplate, IEnumerable<GameTemplate> secondTemplate, int maxOfChances)
         {
             int toWin = firstTemplate.ToList().Count;
+            var watch = Stopwatch.StartNew();
             while (maxOfChances > 0 && toWin > 0)
             {
                 DisplayMatrix(firstTemplate, secondTemplate, maxOfChances);
@@ -109,7 +111,9 @@ namespace MemoryGame
                 }
                 Thread.Sleep(3000);
             }
-            Information.DisplayMessageAboutResultGame(toWin);
+
+            watch.Stop();
+            Information.DisplayMessageAboutResultGame(maxOfChances, watch);
         }
 
         private static string GetWordByPickedKey(IEnumerable<GameTemplate> template, string pickedKey)
