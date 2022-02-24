@@ -11,22 +11,20 @@ namespace MemoryGame
         static void Main(string[] args)
         {
             char playAgain = 'y';
-            var fileOperations = new FilesOperations();
-            var gameProvider = new GameGuideProvider();
-            var words = fileOperations.GetWordsFromFile();
+            var words = FilesOperations.GetWordsFromFile();
             Information.DisplayInformationBeforeStartGame();
             while (playAgain == 'y')
             {
                 Information.DisplayInformationAboutAvailableMode();
-                char userDifficulty = gameProvider.GetUserDifficulty();
-                var numberOfRandomWords = gameProvider.GetNumberOfWordsForUserDifficulty(userDifficulty);
-                var maxOfChances = gameProvider.GetMaxOfChances(userDifficulty);
-                var firstWordsList = gameProvider.TakeRandomWordsForGame(words, numberOfRandomWords);
-                var secondWordsList = gameProvider.GetCopyOfList(firstWordsList);
-                var firstRowGame = gameProvider.GetTemplateOfWordsForGame(firstWordsList, 'A');
-                var secondRowGame = gameProvider.GetTemplateOfWordsForGame(secondWordsList, 'B');
-                gameProvider.PlayGame(firstRowGame, secondRowGame, maxOfChances);
-                playAgain = gameProvider.AskUserToPlayAgain();
+                char userDifficulty = GameGuideProvider.GetUserDifficulty();
+                var numberOfRandomWords = GameGuideProvider.GetNumberOfWordsForUserDifficulty(userDifficulty);
+                var maxOfChances = GameGuideProvider.GetMaxOfChances(userDifficulty);
+                var firstWordsList = GameGuideProvider.GetRandomWordsForGame(words, numberOfRandomWords);
+                var secondWordsList = GameGuideProvider.GetCopyOfList(firstWordsList);
+                var firstRowGame = GameGuideProvider.GetTemplateOfWordsForGame(firstWordsList, 'A');
+                var secondRowGame = GameGuideProvider.GetTemplateOfWordsForGame(secondWordsList, 'B');
+                GameGuideProvider.PlayGame(firstRowGame, secondRowGame, maxOfChances);
+                playAgain = GameGuideProvider.AskUserToPlayAgain();
             }
             Information.DisplayEndingMessage();
         }
