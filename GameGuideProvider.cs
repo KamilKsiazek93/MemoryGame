@@ -74,7 +74,7 @@ namespace MemoryGame
         public void PlayGame(IEnumerable<GameTemplate> firstTemplate, IEnumerable<GameTemplate> secondTemplate, int maxOfChances)
         {
             int toWin = firstTemplate.ToList().Count;
-            while(maxOfChances > 0 && toWin > 0)
+            while (maxOfChances > 0 && toWin > 0)
             {
                 DisplayMatrix(firstTemplate, secondTemplate, maxOfChances);
                 Information.AskUserForWordInFistRow();
@@ -89,28 +89,23 @@ namespace MemoryGame
                 DisplayMatrix(firstTemplate, secondTemplate, maxOfChances);
                 if (firstWord == secondWord)
                 {
-                    Console.WriteLine("Words are the same. Congrats!!");
+                    Information.DisplayMessageIfWordsAreTheSame();
                     toWin--;
                 }
                 else
                 {
-                    Console.WriteLine("Words are not the same. Try again!");
+                    Information.DisplayMessageIfWodsAreNotTheSame();
                     firstTemplate = ChangeDiscoverWord(firstTemplate, firstPickedKey);
                     secondTemplate = ChangeDiscoverWord(secondTemplate, secondPickedKey);
                     maxOfChances--;
+                    if (maxOfChances > 0)
+                    {
+                        Information.DisplayMessageForTryingAgain();
+                    }
                 }
                 Thread.Sleep(3000);
-                
-                DisplayMatrix(firstTemplate, secondTemplate, maxOfChances);
             }
-            if(toWin > 0)
-            {
-                Console.WriteLine("Game over");
-            }
-            else
-            {
-                Console.WriteLine("You win!!");
-            }
+            Information.DisplayMessageAboutResultGame(toWin);
         }
 
         private string GetWordByPickedKey(IEnumerable<GameTemplate> template, string pickedKey)
@@ -195,6 +190,22 @@ namespace MemoryGame
             DisplayRow(firstTemplate, 'A');
             Console.WriteLine();
             DisplayRow(secondTemplate, 'B');
+        }
+
+        public char AskUserToPlayAgain()
+        {
+            Information.DisplayInformationAboutAgainGame();
+            char playAgain = ' ';
+            while(playAgain != 'y' && playAgain != 'n')
+            {
+                playAgain = Char.ToLower(Console.ReadKey().KeyChar);
+
+                if (playAgain != 'y' && playAgain != 'n')
+                {
+                    Information.DisplayInformationAboutCorrectCharTyping();
+                }
+            }
+            return playAgain;
         }
     }
 }
