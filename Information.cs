@@ -63,15 +63,6 @@ namespace MemoryGame
                 Console.WriteLine("Level: hard");
             }
         }
-        public static void DisplayNumberOfRows(int count)
-        {
-            Console.Write("  ");
-            for (int i = 1; i <= count; i++)
-            {
-                Console.Write(i + " ");
-            }
-            Console.WriteLine();
-        }
 
         public static void AskUserForWordInFistRow()
         {
