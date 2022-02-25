@@ -27,10 +27,14 @@ namespace MemoryGame
 
         public static void SaveUserScoreToFile(string userName, string data, int maxOfChances, Stopwatch watch, char userDifficulty)
         {
-            string fileName = GetRightFileName(userDifficulty);
-            string result = userName + '|' + data + '|' + maxOfChances + '|' + watch.ElapsedMilliseconds / 1000 + '|';
-            using StreamWriter file = new($"../../../{fileName}", append: true);
-            file.WriteLine(result);
+            try
+            {
+                string fileName = GetRightFileName(userDifficulty);
+                string result = userName + '|' + data + '|' + maxOfChances + '|' + watch.ElapsedMilliseconds / 1000 + '|';
+                using StreamWriter file = new($"../../../{fileName}", append: true);
+                file.WriteLine(result);
+            }
+            catch (FileNotFoundException) { }
         }
 
         private static string GetRightFileName(char userDifficulty)
@@ -42,18 +46,23 @@ namespace MemoryGame
         {
             string fileName = GetRightFileName(userDifficulty);
             string path = $"../../../{fileName}";
-            if(!File.Exists(path))
-            {
-                File.Create(path).Dispose();
-            }
-            using StreamReader file = new(path);
-            string line;
             var results = new List<Result>();
-            while((line = file.ReadLine()) != null)
+            try
             {
-                string[] score = line.Split('|');
-                results.Add(new Result { Name = score[0], KeptedChances = Int32.Parse(score[2]), GameTime = Int32.Parse(score[3])});
+                if (!File.Exists(path))
+                {
+                    File.Create(path).Dispose();
+                }
+                using StreamReader file = new(path);
+                string line;
+
+                while ((line = file.ReadLine()) != null)
+                {
+                    string[] score = line.Split('|');
+                    results.Add(new Result { Name = score[0], KeptedChances = Int32.Parse(score[2]), GameTime = Int32.Parse(score[3]) });
+                }
             }
+            catch(FileNotFoundException) { }
             return results.OrderBy(item => item.GameTime).Take(10);
         }
     }
