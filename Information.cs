@@ -116,5 +116,11 @@ namespace MemoryGame
             Console.WriteLine("Do you want to play again? Type 'y' if you want to play again, or type 'n' if you want to close game");
             Console.WriteLine();
         }
+
+        public static void DisplayInformationAboutName()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Type your name for save result in db: ");
+        }
     }
 }
