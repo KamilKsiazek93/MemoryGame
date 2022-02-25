@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
+using MemoryGame.Models;
 
 namespace MemoryGame
 {
@@ -25,6 +26,19 @@ namespace MemoryGame
             string result = userName + '|' + data + '|' + maxOfChances + '|' + watch.ElapsedMilliseconds / 1000 + '|';
             using StreamWriter file = new("../../../Result.txt", append: true);
             file.WriteLine(result);
+        }
+
+        public static IEnumerable<Result> GetTenBesttScoresFromFile()
+        {
+            using StreamReader file = new("../../../Result.txt");
+            string line;
+            var results = new List<Result>();
+            while((line = file.ReadLine()) != null)
+            {
+                string[] score = line.Split('|');
+                results.Add(new Result { Name = score[0], KeptedChances = Int32.Parse(score[2]), GameTime = Int32.Parse(score[3])});
+            }
+            return results.OrderBy(item => item.GameTime).Take(10);
         }
     }
 }

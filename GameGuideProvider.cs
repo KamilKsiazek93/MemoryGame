@@ -114,6 +114,7 @@ namespace MemoryGame
 
             watch.Stop();
             Information.DisplayMessageAboutResultGame(maxOfChances, watch);
+            Information.DisplayBestResult(FilesOperations.GetTenBesttScoresFromFile());
             if(maxOfChances > 0)
             {
                 string userName = AskUserAboutName();
