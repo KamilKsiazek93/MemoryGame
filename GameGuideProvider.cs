@@ -86,28 +86,20 @@ namespace MemoryGame
                 Information.AskUserForWordInFistRow();
                 var firstPickedKey = GetPickedKey(firstTemplate);
                 string firstWord = GetWordByPickedKey(firstTemplate, firstPickedKey);
-                firstTemplate = ChangeDiscoverWord(firstTemplate, firstPickedKey);
+                ChangeDiscoverWord(firstTemplate, firstPickedKey);
                 DisplayMatrix(firstTemplate, secondTemplate, maxOfChances);
                 Information.AskUserForWordInSecondRow();
                 var secondPickedKey = GetPickedKey(secondTemplate);
                 string secondWord = GetWordByPickedKey(secondTemplate, secondPickedKey);
-                secondTemplate = ChangeDiscoverWord(secondTemplate, secondPickedKey);
+                ChangeDiscoverWord(secondTemplate, secondPickedKey);
                 DisplayMatrix(firstTemplate, secondTemplate, maxOfChances);
-                if (firstWord == secondWord)
+                if(IsWordTheSame(firstWord, secondWord))
                 {
-                    Information.DisplayMessageIfWordsAreTheSame();
-                    toWin--;
+                    ActionsWhenWordsAreTheSame(ref toWin);
                 }
                 else
                 {
-                    Information.DisplayMessageIfWodsAreNotTheSame();
-                    firstTemplate = ChangeDiscoverWord(firstTemplate, firstPickedKey);
-                    secondTemplate = ChangeDiscoverWord(secondTemplate, secondPickedKey);
-                    maxOfChances--;
-                    if (maxOfChances > 0)
-                    {
-                        Information.DisplayMessageForTryingAgain();
-                    }
+                    ActionsWhenWordsAreDifferent(ref firstTemplate, firstPickedKey, ref secondTemplate, secondPickedKey, ref maxOfChances);
                 }
                 Thread.Sleep(3000);
             }
@@ -117,10 +109,38 @@ namespace MemoryGame
             Information.DisplayBestResult(FilesOperations.GetTenBesttScoresFromFile());
             if(maxOfChances > 0)
             {
-                string userName = AskUserAboutName();
-                string data = GetTodayData();
-                FilesOperations.SaveUserScoreToFile(userName, data, maxOfChances, watch);
+                SaveResultIntoFile(maxOfChances, watch);
             }
+        }
+
+        private static void SaveResultIntoFile(int maxOfChances, Stopwatch watch)
+        {
+            string userName = AskUserAboutName();
+            string data = GetTodayData();
+            FilesOperations.SaveUserScoreToFile(userName, data, maxOfChances, watch);
+        }
+
+        private static void ActionsWhenWordsAreDifferent(ref IEnumerable<GameTemplate> firstTemplate, string firstPickedKey, ref IEnumerable<GameTemplate> secondTemplate, string secondPickedKey ,ref int maxOfChances)
+        {
+            Information.DisplayMessageIfWodsAreNotTheSame();
+            ChangeDiscoverWord(firstTemplate, firstPickedKey);
+            ChangeDiscoverWord(secondTemplate, secondPickedKey);
+            maxOfChances--;
+            if (maxOfChances > 0)
+            {
+                Information.DisplayMessageForTryingAgain();
+            }
+        }
+
+        private static void ActionsWhenWordsAreTheSame(ref int toWin)
+        {
+            Information.DisplayMessageIfWordsAreTheSame();
+            toWin--;
+        }
+
+        private static bool IsWordTheSame(string firstWord, string secondWord)
+        {
+            return firstWord == secondWord;
         }
 
         private static string GetTodayData()
