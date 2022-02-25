@@ -44,8 +44,10 @@ namespace MemoryGame
 
         public static void DisplayInfoAboutChancesLeft(int maxOfChances)
         {
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("Guess chances: {0}", maxOfChances);
             Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         public static void DisplayEndingMessage()
@@ -56,6 +58,7 @@ namespace MemoryGame
 
         public static void DisplayInfoAboutLevel(int maxOfChances)
         {
+            Console.ForegroundColor = ConsoleColor.Blue;
             if (maxOfChances == 10)
             {
                 Console.WriteLine("Level: easy");
@@ -64,6 +67,7 @@ namespace MemoryGame
             {
                 Console.WriteLine("Level: hard");
             }
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         public static void AskUserForWordInFistRow()
@@ -84,13 +88,16 @@ namespace MemoryGame
         {
             if (maxOfChances == 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Game over.");
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("You win!!");
                 Console.WriteLine("You kept {0} chances", maxOfChances);
             }
+            Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("The game took you {0} seconds", watch.ElapsedMilliseconds / 1000);
         }
 
@@ -102,13 +109,17 @@ namespace MemoryGame
         public static void DisplayMessageIfWodsAreNotTheSame()
         {
             Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Words are not the same");
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         public static void DisplayMessageIfWordsAreTheSame()
         {
             Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Words are the same. Great!");
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         public static void DisplayInformationAboutAgainGame()
@@ -129,12 +140,14 @@ namespace MemoryGame
             Console.WriteLine();
             Console.WriteLine("Best scores in game: ");
             Console.WriteLine();
-            foreach(var result in results)
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            foreach (var result in results)
             {
                 Console.Write("Player: " + result.Name + ", kepting chances: " + result.KeptedChances +
                     ", finish time: " + result.GameTime);
                 Console.WriteLine();
             }
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
     }
 }
