@@ -8,7 +8,8 @@ namespace MemoryGame
 {
     class Program
     {
-        static void Main(string[] args)
+
+        static void LaunchGame()
         {
             char playAgain = 'y';
             var words = FilesOperations.GetWordsFromFile();
@@ -27,6 +28,11 @@ namespace MemoryGame
                 playAgain = GameGuideProvider.AskUserToPlayAgain();
             }
             Information.DisplayEndingMessage();
+        }
+
+        static void Main(string[] args)
+        {
+            LaunchGame();
         }
     }
 }

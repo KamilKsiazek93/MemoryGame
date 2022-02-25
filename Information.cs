@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -78,16 +79,18 @@ namespace MemoryGame
             Console.WriteLine();
         }
 
-        public static void DisplayMessageAboutResultGame(int toWin)
+        public static void DisplayMessageAboutResultGame(int maxOfChances, Stopwatch watch)
         {
-            if (toWin > 0)
+            if (maxOfChances == 0)
             {
-                Console.WriteLine("Game over");
+                Console.WriteLine("Game over.");
             }
             else
             {
                 Console.WriteLine("You win!!");
+                Console.WriteLine("You kept {0} chances", maxOfChances);
             }
+            Console.WriteLine("The game took you {0} seconds", watch.ElapsedMilliseconds / 1000);
         }
 
         public static void DisplayMessageForTryingAgain()
