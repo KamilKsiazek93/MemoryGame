@@ -24,7 +24,7 @@ namespace MemoryGame
                 var secondWordsList = GameGuideProvider.GetCopyOfList(firstWordsList);
                 var firstRowGame = GameGuideProvider.GetTemplateOfWordsForGame(firstWordsList, 'A');
                 var secondRowGame = GameGuideProvider.GetTemplateOfWordsForGame(secondWordsList, 'B');
-                GameGuideProvider.PlayGame(firstRowGame, secondRowGame, maxOfChances);
+                GameGuideProvider.PlayGame(firstRowGame, secondRowGame, maxOfChances, userDifficulty);
                 playAgain = GameGuideProvider.AskUserToPlayAgain();
             }
             Information.DisplayEndingMessage();

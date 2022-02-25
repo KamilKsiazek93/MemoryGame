@@ -137,15 +137,17 @@ namespace MemoryGame
 
         public static void DisplayBestResult(IEnumerable<Result> results)
         {
+            int index = 1;
             Console.WriteLine();
             Console.WriteLine("Best scores in game: ");
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Yellow;
             foreach (var result in results)
             {
-                Console.Write("Player: " + result.Name + ", kepting chances: " + result.KeptedChances +
+                Console.Write(index.ToString() + ". Player: " + result.Name + ", kepting chances: " + result.KeptedChances +
                     ", finish time: " + result.GameTime);
                 Console.WriteLine();
+                index++;
             }
             Console.ForegroundColor = ConsoleColor.Gray;
         }

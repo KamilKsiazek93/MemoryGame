@@ -76,7 +76,7 @@ namespace MemoryGame
             return template;
         }
 
-        public static void PlayGame(IEnumerable<GameTemplate> firstTemplate, IEnumerable<GameTemplate> secondTemplate, int maxOfChances)
+        public static void PlayGame(IEnumerable<GameTemplate> firstTemplate, IEnumerable<GameTemplate> secondTemplate, int maxOfChances, char userDifficulty)
         {
             int toWin = firstTemplate.ToList().Count;
             var watch = Stopwatch.StartNew();
@@ -106,18 +106,18 @@ namespace MemoryGame
 
             watch.Stop();
             Information.DisplayMessageAboutResultGame(maxOfChances, watch);
-            Information.DisplayBestResult(FilesOperations.GetTenBesttScoresFromFile());
+            Information.DisplayBestResult(FilesOperations.GetTenBestScoresFromFile(userDifficulty));
             if(maxOfChances > 0)
             {
-                SaveResultIntoFile(maxOfChances, watch);
+                SaveResultIntoFile(maxOfChances, watch, userDifficulty);
             }
         }
 
-        private static void SaveResultIntoFile(int maxOfChances, Stopwatch watch)
+        private static void SaveResultIntoFile(int maxOfChances, Stopwatch watch, char userDifficulty)
         {
             string userName = AskUserAboutName();
             string data = GetTodayData();
-            FilesOperations.SaveUserScoreToFile(userName, data, maxOfChances, watch);
+            FilesOperations.SaveUserScoreToFile(userName, data, maxOfChances, watch, userDifficulty);
         }
 
         private static void ActionsWhenWordsAreDifferent(ref IEnumerable<GameTemplate> firstTemplate, string firstPickedKey, ref IEnumerable<GameTemplate> secondTemplate, string secondPickedKey ,ref int maxOfChances)

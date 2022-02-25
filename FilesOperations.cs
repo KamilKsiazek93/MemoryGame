@@ -11,26 +11,42 @@ namespace MemoryGame
 {
     public static class FilesOperations
     {
+        private const string FILE_WITH_WORDS = "words.txt";
+        private const string FILE_WITH_RESULTS_EASY_MODE = "ResultsEasy.txt";
+        private const string FILE_WITH_RESULTS_HARD_MODE = "ResultsHard.txt";
+
         public static List<string> GetWordsFromFile()
         {
             var words = new List<string>();
-            foreach (string line in File.ReadLines("../../../Words.txt"))
+            foreach (string line in File.ReadLines($"../../../{FILE_WITH_WORDS}"))
             {
                 words.Add(line);
             }
             return words;
         }
 
-        public static void SaveUserScoreToFile(string userName, string data, int maxOfChances, Stopwatch watch)
+        public static void SaveUserScoreToFile(string userName, string data, int maxOfChances, Stopwatch watch, char userDifficulty)
         {
+            string fileName = GetRightFileName(userDifficulty);
             string result = userName + '|' + data + '|' + maxOfChances + '|' + watch.ElapsedMilliseconds / 1000 + '|';
-            using StreamWriter file = new("../../../Result.txt", append: true);
+            using StreamWriter file = new($"../../../{fileName}", append: true);
             file.WriteLine(result);
         }
 
-        public static IEnumerable<Result> GetTenBesttScoresFromFile()
+        private static string GetRightFileName(char userDifficulty)
         {
-            using StreamReader file = new("../../../Result.txt");
+            return userDifficulty == 'e' ? FILE_WITH_RESULTS_EASY_MODE : FILE_WITH_RESULTS_HARD_MODE;
+        }
+
+        public static IEnumerable<Result> GetTenBestScoresFromFile(char userDifficulty)
+        {
+            string fileName = GetRightFileName(userDifficulty);
+            string path = $"../../../{fileName}";
+            if(!File.Exists(path))
+            {
+                File.Create(path).Dispose();
+            }
+            using StreamReader file = new(path);
             string line;
             var results = new List<Result>();
             while((line = file.ReadLine()) != null)
