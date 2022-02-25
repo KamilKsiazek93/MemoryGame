@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MemoryGame.Models;
 
 namespace MemoryGame
 {
@@ -115,6 +116,25 @@ namespace MemoryGame
             Console.WriteLine();
             Console.WriteLine("Do you want to play again? Type 'y' if you want to play again, or type 'n' if you want to close game");
             Console.WriteLine();
+        }
+
+        public static void DisplayInformationAboutName()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Type your name for save result in db: ");
+        }
+
+        public static void DisplayBestResult(IEnumerable<Result> results)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Best scores in game: ");
+            Console.WriteLine();
+            foreach(var result in results)
+            {
+                Console.Write("Player: " + result.Name + ", kepting chances: " + result.KeptedChances +
+                    ", finish time: " + result.GameTime);
+                Console.WriteLine();
+            }
         }
     }
 }

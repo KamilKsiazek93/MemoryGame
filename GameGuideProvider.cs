@@ -114,6 +114,24 @@ namespace MemoryGame
 
             watch.Stop();
             Information.DisplayMessageAboutResultGame(maxOfChances, watch);
+            Information.DisplayBestResult(FilesOperations.GetTenBesttScoresFromFile());
+            if(maxOfChances > 0)
+            {
+                string userName = AskUserAboutName();
+                string data = GetTodayData();
+                FilesOperations.SaveUserScoreToFile(userName, data, maxOfChances, watch);
+            }
+        }
+
+        private static string GetTodayData()
+        {
+            return DateTime.Today.ToString("D");
+        }
+
+        private static string AskUserAboutName()
+        {
+            Information.DisplayInformationAboutName();
+            return Console.ReadLine();
         }
 
         private static string GetWordByPickedKey(IEnumerable<GameTemplate> template, string pickedKey)
